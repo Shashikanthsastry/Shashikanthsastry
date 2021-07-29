@@ -1,0 +1,33 @@
+---
+- hosts: all
+  sudo: true
+  tasks:
+  - name: path of folder
+    sudo: true
+    action: shell sudo mkdir -p /downloads && cd /downloads
+  - name: skywalking
+    sudo: true
+    action: shell sudo wget https://archive.apache.org/dist/skywalking/8.6.0/apache-skywalking-apm-8.6.0.tar.gz
+  tasks:
+  - name: Creates directory
+     file:
+      path: /usr/local/skywalking/
+      state: directory
+      mode: 0775
+      recurse: yes
+  tasks:
+  -	name: unarchive
+    ansible.builtin.unarchive:
+    src: /downloads/apache-skywalking-apm-8.6.0.tar.gz
+    dest: /usr/local/skywalking/
+    remote_src: yes 
+  tasks:
+  - name: run sh file
+         command: sh cd /usr/local/skywalking/apache-skywalking-apm-bin/bin/startup.sh
+  tasks:
+  - name : redirect to download and download wget
+    sudo: true
+    action: shell cd /downloads
+  - name: skywalking
+    sudo: true
+    action: shell sudo wget https://github.com/open-telemetry/opentelemetry-collector/releases/download/v0.30.1/otel-collector-0.30.1-1.x86_64.rpm
