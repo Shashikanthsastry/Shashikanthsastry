@@ -1,0 +1,10 @@
+---
+- name: key
+  hosts: all
+  tasks:
+  - name: keygen
+    authorized_key:
+      user: root
+      state: present
+      key: "{{lookup('file', '/root/.ssh/id_rsa.pub')}}"
+
